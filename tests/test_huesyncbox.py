@@ -1,17 +1,18 @@
 """Test the Philips Hue Play HDMI Sync Box class."""
 
-import pytest
-
 import aiohuesyncbox
+import pytest
+from pytest_homeassistant_custom_component.async_mock import patch
 
-from pytest_homeassistant_custom_component.async_mock import patch, AsyncMock, Mock
+from custom_components.huesyncbox import huesyncbox
+
 # from pytest_homeassistant_custom_component.common import (
 #     MockConfigEntry,
 # )
 
-from custom_components.huesyncbox import huesyncbox, errors
 
-# TODO: move device registry code from huesyncbox class to async_setup_entry in  __init__.py
+# TODO:
+# move device registry code from huesyncbox class to async_setup_entry in  __init__.py
 # async def test_huesyncbox_setup(hass, mock_api):
 #     """Test a successful setup."""
 #     entry = MockConfigEntry()
@@ -24,6 +25,7 @@ from custom_components.huesyncbox import huesyncbox, errors
 
 #     assert syncbox.api is mock_api
 #     assert mock_api.initialize.call_count == 1
+
 
 async def test_register_aiohuesyncbox_request_error(hass, mock_api):
     """Test we retry to connect if we cannot connect."""
