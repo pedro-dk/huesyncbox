@@ -159,10 +159,11 @@ class HueSyncBoxMediaPlayerEntity(MediaPlayerEntity):
             # Most likely another application is already syncing to the bridge
             # Since there is no way to ask the user what to do just
             # stop the active application and try to activate again
-            for id, info in self._huesyncbox.api.hue.groups.items():
-                if info["active"]:
-                    LOGGER.info(f'Deactivating syncing for {info["owner"]}')
-                    await self._huesyncbox.api.hue.set_group_state(id, active=False)
+            LOGGER.warning(f'Attempting to start syncing while already another application is already syncing on the Hue Bridge. Try to stop it so we can start.')
+            for group in self._huesyncbox.api.hue.groups:
+                if group.active:
+                    LOGGER.warning(f'Stop syncing of "{group.owner}" in area "{group.name}"')
+                    await self._huesyncbox.api.hue.set_group_active(group.id, active=False)
             await self._huesyncbox.api.execution.set_state(sync_active=True)
 
         self.async_schedule_update_ha_state(True)
