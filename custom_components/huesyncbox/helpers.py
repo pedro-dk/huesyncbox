@@ -23,7 +23,7 @@ def log_entry_data(data):
     output += f"port: {data['port']}\n"
     output += f"path: {data['path']}\n"
     output += f"reg: {data['registration_id'] if 'registration_id' in data else None}\n"
-    output += f"devicetype: {data['devicetype']}\n"
+    output += f"devicetype: {data['devicetype'] if 'devicetype' in data else None}\n"
     output += f"uid: {redacted(data['unique_id'])}\n"
     output += f"token: {redacted(data['access_token']) if 'access_token' in data else None}\n"
 
