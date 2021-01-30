@@ -3,6 +3,7 @@ from homeassistant import config_entries
 
 from .const import DOMAIN, LOGGER  # pylint:disable=unused-import
 from .errors import AuthenticationRequired, CannotConnect
+from .helpers import redacted
 from .huesyncbox import (
     async_get_aiohuesyncbox_from_entry_data,
     async_register_aiohuesyncbox,
@@ -47,8 +48,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             errors["base"] = "cannot_connect"
         except Exception:  # pylint: disable=broad-except
             LOGGER.exception(
-                "Unknown error connecting to the Phlips Hue Play HDMI Sync Box %s at %s",
-                self.context["unique_id"],
+                "Unknown error connecting to the Phlips Hue Play HDMI Sync Box '%s' at %s",
+                redacted(self.context["unique_id"]),
                 self.context["host"],
             )
             errors["base"] = "unknown"
